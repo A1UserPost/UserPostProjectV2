@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Create Account</h1>
+
+<form id="usernameInfo">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" autocomplete="username">
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" autocomplete="new-password">
+
+    <button type="submit">Create Account</button>
+</form>
+
+<script>
+document.getElementById("usernameInfo").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const usernameVal = document.getElementById("username").value;
+    const passwordVal = document.getElementById("password").value;
+
+    const userData = {
+        username: usernameVal,
+        password: passwordVal
+    };
+
+    try {
+        const response = await fetch("http://localhost:3000/register", {
+            mode: "cors",
+            method: "POST",
+            include: "credentials",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+        });
+
+        const result = await response.text();
+        alert(result);
+    } catch (error) {
+        console.error("Fetch failed:", error);
+        alert("Could not connect to server");
+    }
+});
+</script>
+
+</body>
+</html>
