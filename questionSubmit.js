@@ -2,7 +2,7 @@
 // Open User UI with cache busting 
 function openUserUI() {
   const cacheBuster = `?v=${Date.now()}`;
-  window.open(`userInterface.html${cacheBuster}`, '_blank');
+  window.open(`questionSubmit.html${cacheBuster}`, '_blank');
 }
 
 // Add new custom side input 
