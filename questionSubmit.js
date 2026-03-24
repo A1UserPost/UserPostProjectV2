@@ -1,14 +1,12 @@
-
-// Open User UI with cache busting 
+// Open User UI with cache busting
 function openUserUI() {
   const cacheBuster = `?v=${Date.now()}`;
-  window.open(`questionSubmit.html${cacheBuster}`, '_blank');
+  window.open(`index.html${cacheBuster}`, '_blank');
 }
 
-// Add new custom side input 
+// Add new custom side input
 function addSide() {
   const container = document.getElementById('sidesContainer');
-  const sideCount = container.children.length + 1;
   const newSide = document.createElement('div');
   newSide.className = 'side-item';
   newSide.innerHTML = `
@@ -18,23 +16,24 @@ function addSide() {
   container.appendChild(newSide);
 }
 
-// Delete side 
+// Delete side
 function deleteSide(btn) {
   const container = document.getElementById('sidesContainer');
   if (container.children.length > 2) btn.parentElement.remove();
   else alert("Minimum 2 sides required for the platform!");
 }
 
-// Publish question and  custom sides 
+// Publish question and custom sides
 function publishQuestion() {
   const question = document.getElementById('modQuestionInput').value.trim();
   const sideInputs = document.querySelectorAll('.side-input');
   const sides = Array.from(sideInputs)
     .map(input => input.value.trim())
-    .filter(side => side); 
+    .filter(side => side);
+
+  const status = document.getElementById('publishStatus');
 
   // Validation
-  const status = document.getElementById('publishStatus');
   if (!question) {
     status.textContent = "Error: Enter a valid question first!";
     status.className = "status error";
@@ -46,25 +45,35 @@ function publishQuestion() {
     return;
   }
 
-  // Clear ALL old session storage 
-  sessionStorage.clear();
-  // Save new question/sides
-  sessionStorage.setItem('publishedQuestion', question);
-  sessionStorage.setItem('publishedSides', JSON.stringify(sides));
-  // Add timestamp for tracking
-  sessionStorage.setItem('questionLastUpdated', Date.now());
+  // Build the new question entry
+  const newQuestion = {
+    id: Date.now(),
+    question: question,
+    sides: sides,
+    publishedAt: new Date().toLocaleString(),
+  };
 
-  // Success message 
+  // Add to the running list of all published questions
+  const existing = JSON.parse(localStorage.getItem('publishedQuestions')) || [];
+  existing.push(newQuestion);
+  localStorage.setItem('publishedQuestions', JSON.stringify(existing));
+
+  // Also keep the latest question handy for userInterface.html
+  localStorage.setItem('publishedQuestion', question);
+  localStorage.setItem('publishedSides', JSON.stringify(sides));
+  localStorage.setItem('questionLastUpdated', Date.now());
+
   status.textContent = `Success! Published: "${question}" | Sides: ${sides.join(", ")} — Click "Refresh User UI" to see changes!`;
   status.className = "status success";
-
 }
 
 // Load saved question and sides on mod page refresh
 window.onload = () => {
-  const savedQ = sessionStorage.getItem('publishedQuestion');
-  const savedSides = JSON.parse(sessionStorage.getItem('publishedSides'));
+  const savedQ = localStorage.getItem('publishedQuestion');
+  const savedSides = JSON.parse(localStorage.getItem('publishedSides'));
+
   if (savedQ) document.getElementById('modQuestionInput').value = savedQ;
+
   if (savedSides && savedSides.length >= 2) {
     const container = document.getElementById('sidesContainer');
     container.innerHTML = '';
@@ -78,4 +87,4 @@ window.onload = () => {
       container.appendChild(sideItem);
     });
   }
-}
+};
