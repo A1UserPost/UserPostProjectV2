@@ -1,16 +1,59 @@
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
 body {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  line-height: 1.5;
+        background-color: #F5F5F5;
+
 }
+
+.NavbarContainer {
+  height: 90px;
+  background-color: #F55A5A;
+  padding: 30px 25px;
+}
+
+.nav{
+  height: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.NavItems {
+  display: flex;
+  gap: 1.5rem;
+}
+
+nav > img {
+  width: 150px;
+  margin-right: 7px;
+
+
+}
+
+nav > span {
+  color: #F5F5F5;
+  font-family: 'Racing Sans One', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+a:link {
+  color: White;
+}
+
+a:visited {
+  color: White;
+}
+
+a:hover {
+  color: White;
+}
+
+
 
 .app-section {
   margin: 2rem 0;
@@ -141,59 +184,4 @@ textarea.locked {
 
 .refresh-btn:hover {
   background: #ffca2c;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-        background-color: #F5F5F5;
-
-}
-
-.NavbarContainer {
-  height: 90px;
-  background-color: #F55A5A;
-  padding: 30px 25px;
-}
-
-.nav{
-  height: 100%;
-  color: white;
-  display: flex;
-  align-items: center;
-}
-
-.NavItems {
-  display: flex;
-  gap: 1.5rem;
-}
-
-nav > img {
-  width: 150px;
-  margin-right: 7px;
-
-
-}
-
-nav > span {
-  color: #F5F5F5;
-  font-family: 'Racing Sans One', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  font-style: normal;
-}
-
-
-a:link {
-  color: White;
-}
-
-a:visited {
-  color: White;
-}
-
-a:hover {
-  color: White;
 }
