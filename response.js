@@ -14,7 +14,7 @@
 
     // 2. Load MOD-PUBLISHED Question and Sides 
     function loadPublishedQuestionAndSides() {
-      const question = localStorage.getItem('publishedQuestions');
+      const question = JSON.parse(localStorage.getItem('publishedQuestions') || [];
       publishedSides = JSON.parse(sessionStorage.getItem('publishedSides')) || [];
       const qElement = document.getElementById('publishedQuestion');
       const sideContainer = document.getElementById('sideButtonsContainer');
