@@ -122,6 +122,26 @@ function submitReason() {
   document.getElementById('othersResponsesContainer').style.display = "block";
   loadOtherReasons();
 }
+
+// 7. Load Other Users' Reasons
+function loadOtherReasons() {
+  const otherReasons = JSON.parse(localStorage.getItem('allResponses')) || [];
+  const listContainer = document.getElementById('otherReasonsList');
+
+  if (otherReasons.length === 0) {
+    listContainer.innerHTML = "<p>No other user responses yet!</p>";
+    return;
+  }
+
+  listContainer.innerHTML = otherReasons.map(item => `
+    <div class="other-reason">
+      <span class="side-badge">${item.author}'s Stance: ${item.side}</span>
+      <p>${item.reason}</p>
+    </div>
+  `).join('');
+}
+
+// 8. Load User Saved State
 // 7. Load User Saved State
 function loadUserState() {
   const savedSide = sessionStorage.getItem('userSelectedSide');
