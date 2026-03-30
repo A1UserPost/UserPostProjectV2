@@ -23,6 +23,19 @@ function deleteSide(btn) {
   else alert("Minimum 2 sides required for the platform!");
 }
 
+function showExpiryDate() {
+  const now = Date.now();
+  const expireTime = now + (7 * 24 * 60 * 60 * 1000);
+  const formatted = new Date(expireTime).toLocaleString();
+
+  const box = document.getElementById('expiryDateDisplay');
+  box.innerHTML = `
+    This question will <span class="expiry-date-text">EXPIRE ON:</span> ${formatted}
+  `;
+}
+
+
+
 // Publish question and custom sides
 function publishQuestion() {
   const question = document.getElementById('modQuestionInput').value.trim();
@@ -45,16 +58,22 @@ function publishQuestion() {
     return;
   }
 
+  const publishTime = Date.now();
+  const expireTime = publishTime + (7 * 24 * 60 * 60 * 1000);
+  
   // Build the new question entry
   const newQuestion = {
     id: Date.now(),
     question: question,
     sides: sides,
-    publishedAt: new Date().toLocaleString(),
+    publishTime: publicTime,
+    expireTime: expireTime,
+    publishedAt: new Date(publishTime).toLocaleString(),
+    
   };
 
   // Add to the running list of all published questions
-  const existing = JSON.parse(localStorage.getItem('publishedQuestions')) || [];
+  const existing = JSON.parse(localStorage.getItem('publishedQuestions') || []);
   existing.push(newQuestion);
   localStorage.setItem('publishedQuestions', JSON.stringify(existing));
 
@@ -63,8 +82,10 @@ function publishQuestion() {
   localStorage.setItem('publishedSides', JSON.stringify(sides));
   localStorage.setItem('questionLastUpdated', Date.now());
 
-  status.textContent = `Success! Published: "${question}" | Sides: ${sides.join(", ")} — Click "Refresh User UI" to see changes!`;
+  status.textContent = `Success! Published: "${question}" Expires ${new Date(expireTime).toLocaleString()} | Sides: ${sides.join(", ")} — Click "Refresh User UI" to see changes!`;
   status.className = "status success";
+
+  showExpiryDate();
 }
 
 // Load saved question and sides on mod page refresh
@@ -86,5 +107,14 @@ window.onload = () => {
       `;
       container.appendChild(sideItem);
     });
+
+     if (savedQ.expireTime) {
+      const formatted = new Date(saved.expireTime).toLocaleString();
+      const box = document.getElementById('expiryDateDisplay');
+      box.innerHTML = `
+        Currently active question <span class="expiry-date-text">EXPIRES ON:</span> ${formatted}
+      `;
+    }
+    
   }
 };
