@@ -1,50 +1,85 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <link rel="stylesheet" href="index.css" />
+  <title>User Posting App</title>
+</head>
 <body>
+  <header class="NavbarContainer">
+    <nav class="nav">
+      <img src="StupidDebatesLogo.png" alt="Website logo" class="logo" />
+      <span class="span">Whole Lotta Nothing</span>
+      <ul class="NavItems">
+        <li><a href='index.html'>Questions</a></li>
+        <li><a href='yourResponses.html'>Your Reason</a></li>
+        <li><a href='othersResponses.html'>Other's Reasons</a></li>
+        <li><a href='account.html'>Account</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<h1>Create Account</h1>
+  <div class="app-section">
+    <h2>Create Account</h2>
 
-<form id="usernameInfo">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" autocomplete="username">
+    <form id="usernameInfo">
+      <p>
+        <label for="username">Create Username:</label><br>
+        <input type="text" id="username" name="username" autocomplete="username">
+      </p>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" autocomplete="new-password">
+      <p>
+        <label for="email">Enter Email:</label><br>
+        <input type="email" id="email" name="email" autocomplete="email">
+      </p>
 
-    <button type="submit">Create Account</button>
-</form>
+      <p>
+        <label for="password">Create Password:</label><br>
+        <input type="password" id="password" name="password" autocomplete="new-password">
+      </p>
 
-<script>
-document.getElementById("usernameInfo").addEventListener("submit", async function(event) {
-    event.preventDefault();
+      <p>
+        <label for="confirmPassword">Confirm Password:</label><br>
+        <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password">
+      </p>
 
-    const usernameVal = document.getElementById("username").value;
-    const passwordVal = document.getElementById("password").value;
+      <button type="submit">Create Account</button>
+    </form>
+  </div>
 
-    const userData = {
-        username: usernameVal,
-        password: passwordVal
-    };
+  <script>
+    document.getElementById("usernameInfo").addEventListener("submit", async function(event) {
+        event.preventDefault();
 
-    try {
-        const response = await fetch("http://localhost:3000/register", {
-            mode: "cors",
-            method: "POST",
-            include: "credentials",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(userData)
-        });
+        const usernameVal = document.getElementById("username").value;
+        const emailVal = document.getElementById("email").value;
+        const passwordVal = document.getElementById("password").value;
+        const confirmPasswordVal = document.getElementById("confirmPassword").value;
 
-        const result = await response.text();
-        alert(result);
-    } catch (error) {
-        console.error("Fetch failed:", error);
-        alert("Could not connect to server");
-    }
-});
-</script>
+        const userData = {
+            username: usernameVal,
+            email: emailVal,
+            password: passwordVal,
+            confirmPassword: confirmPasswordVal
+        };
 
+        try {
+            const response = await fetch("http://localhost:3000/register", {
+                mode: "cors",
+                method: "POST",
+                include: "credentials",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
+
+            const result = await response.text();
+            alert(result);
+        } catch (error) {
+            console.error("Fetch failed:", error);
+            alert("Could not connect to server");
+        }
+    });
+  </script>
 </body>
 </html>
