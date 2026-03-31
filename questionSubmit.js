@@ -70,7 +70,7 @@ function publishQuestion() {
   };
 
   // Save to both lists
-  const allQuestions = JSON.parse(localStorage.getItem('publishedQuestions') || '[]');
+  const allQuestions = JSON.parse(localStorage.getItem('publishedQuestions')) || '[]';
   allQuestions.push(newQuestion);
   localStorage.setItem('publishedQuestions', JSON.stringify(allQuestions));
   localStorage.setItem('publishedQuestionData', JSON.stringify(newQuestion));
