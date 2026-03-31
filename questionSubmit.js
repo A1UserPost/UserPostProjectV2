@@ -1,4 +1,3 @@
-// Open User UI with cache busting
 function openUserUI() {
   const cacheBuster = `?v=${Date.now()}`;
   window.open(`index.html${cacheBuster}`, '_blank');
@@ -43,7 +42,6 @@ function publishQuestion() {
   const sides = Array.from(sideInputs)
     .map(input => input.value.trim())
     .filter(Boolean);
-
   const status = document.getElementById('publishStatus');
 
   if (!question) {
@@ -59,7 +57,6 @@ function publishQuestion() {
 
   const publishTime = Date.now();
   const expireTime = publishTime + (7 * 24 * 60 * 60 * 1000);
-
   const newQuestion = {
     id: Date.now(),
     question: question,
@@ -69,44 +66,18 @@ function publishQuestion() {
     publishedAt: new Date(publishTime).toLocaleString()
   };
 
-  // Save to both lists
-  const allQuestions = JSON.parse(localStorage.getItem('publishedQuestions')) || '[]';
+  // Save to question list
+  const allQuestions = JSON.parse(localStorage.getItem('publishedQuestions')) || [];
   allQuestions.push(newQuestion);
   localStorage.setItem('publishedQuestions', JSON.stringify(allQuestions));
+
+  // Save full object for mod page reload
   localStorage.setItem('publishedQuestionData', JSON.stringify(newQuestion));
+
+  localStorage.setItem('publishedQuestion', question);
+  localStorage.setItem('publishedSides', JSON.stringify(sides));
 
   status.textContent = `SUCCESS! Question expires: ${new Date(expireTime).toLocaleString()}`;
   status.className = "status success";
-
-  // Show expiry date
   showExpiryDate();
 }
-
-// Load saved question + show expiry
-window.onload = () => {
-  const saved = JSON.parse(localStorage.getItem('publishedQuestionData'));
-  if (saved) {
-    document.getElementById('modQuestionInput').value = saved.question;
-    const container = document.getElementById('sidesContainer');
-    container.innerHTML = '';
-
-    saved.sides.forEach(side => {
-      const item = document.createElement('div');
-      item.className = 'side-item';
-      item.innerHTML = `
-        <input type="text" class="side-input" value="${side}">
-        <button class="delete-side" onclick="deleteSide(this)">Delete</button>
-      `;
-      container.appendChild(item);
-    });
-
-    // Show expiry date if already published
-    if (saved.expireTime) {
-      const formatted = new Date(saved.expireTime).toLocaleString();
-      const box = document.getElementById('expiryDateDisplay');
-      box.innerHTML = `
-        Currently active question <span class="expiry-date-text">EXPIRES ON:</span> ${formatted}
-      `;
-    }
-  }
-};
