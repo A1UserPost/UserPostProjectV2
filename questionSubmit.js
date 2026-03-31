@@ -42,79 +42,71 @@ function publishQuestion() {
   const sideInputs = document.querySelectorAll('.side-input');
   const sides = Array.from(sideInputs)
     .map(input => input.value.trim())
-    .filter(side => side);
+    .filter(Boolean);
 
   const status = document.getElementById('publishStatus');
 
-  // Validation
   if (!question) {
-    status.textContent = "Error: Enter a valid question first!";
+    status.textContent = "Error: Enter a question!";
     status.className = "status error";
     return;
   }
   if (sides.length < 2) {
-    status.textContent = "Error: Add at least 2 valid sides (no empty names!)";
+    status.textContent = "Error: At least 2 sides required!";
     status.className = "status error";
     return;
   }
 
   const publishTime = Date.now();
   const expireTime = publishTime + (7 * 24 * 60 * 60 * 1000);
-  
-  // Build the new question entry
+
   const newQuestion = {
     id: Date.now(),
     question: question,
     sides: sides,
-    publishTime: publicTime,
+    publishTime: publishTime,
     expireTime: expireTime,
-    publishedAt: new Date(publishTime).toLocaleString(),
-    
+    publishedAt: new Date(publishTime).toLocaleString()
   };
 
-  // Add to the running list of all published questions
-  const existing = JSON.parse(localStorage.getItem('publishedQuestions') || []);
-  existing.push(newQuestion);
-  localStorage.setItem('publishedQuestions', JSON.stringify(existing));
+  // Save to both lists
+  const allQuestions = JSON.parse(localStorage.getItem('publishedQuestions') || '[]');
+  allQuestions.push(newQuestion);
+  localStorage.setItem('publishedQuestions', JSON.stringify(allQuestions));
+  localStorage.setItem('publishedQuestionData', JSON.stringify(newQuestion));
 
-  // Also keep the latest question handy for userInterface.html
-  localStorage.setItem('publishedQuestion', question);
-  localStorage.setItem('publishedSides', JSON.stringify(sides));
-  localStorage.setItem('questionLastUpdated', Date.now());
-
-  status.textContent = `Success! Published: "${question}" Expires ${new Date(expireTime).toLocaleString()} | Sides: ${sides.join(", ")} — Click "Refresh User UI" to see changes!`;
+  status.textContent = `SUCCESS! Question expires: ${new Date(expireTime).toLocaleString()}`;
   status.className = "status success";
 
+  // Show expiry date
   showExpiryDate();
 }
 
-// Load saved question and sides on mod page refresh
+// Load saved question + show expiry
 window.onload = () => {
-  const savedQ = localStorage.getItem('publishedQuestion');
-  const savedSides = JSON.parse(localStorage.getItem('publishedSides'));
-
-  if (savedQ) document.getElementById('modQuestionInput').value = savedQ;
-
-  if (savedSides && savedSides.length >= 2) {
+  const saved = JSON.parse(localStorage.getItem('publishedQuestionData'));
+  if (saved) {
+    document.getElementById('modQuestionInput').value = saved.question;
     const container = document.getElementById('sidesContainer');
     container.innerHTML = '';
-    savedSides.forEach(side => {
-      const sideItem = document.createElement('div');
-      sideItem.className = 'side-item';
-      sideItem.innerHTML = `
+
+    saved.sides.forEach(side => {
+      const item = document.createElement('div');
+      item.className = 'side-item';
+      item.innerHTML = `
         <input type="text" class="side-input" value="${side}">
         <button class="delete-side" onclick="deleteSide(this)">Delete</button>
       `;
-      container.appendChild(sideItem);
+      container.appendChild(item);
     });
 
-     if (savedQ.expireTime) {
+    // Show expiry date if already published
+    if (saved.expireTime) {
       const formatted = new Date(saved.expireTime).toLocaleString();
       const box = document.getElementById('expiryDateDisplay');
       box.innerHTML = `
         Currently active question <span class="expiry-date-text">EXPIRES ON:</span> ${formatted}
       `;
     }
-    
   }
 };
