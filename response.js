@@ -26,7 +26,6 @@ function loadPublishedQuestionAndSides() {
   document.getElementById('reasonInput').value = "";
   document.getElementById('charCount').textContent = "0 / 500 characters";
   document.getElementById('yourResponseContainer').style.display = "none";
-  document.getElementById('othersResponsesContainer').style.display = "none";
   document.getElementById('submitReasonBtn').disabled = true;
 
   // Clear side button styles
