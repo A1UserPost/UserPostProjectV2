@@ -66,6 +66,8 @@ nav > span {
   width: 90%;
   padding: 10px;
   box-sizing: border-box;
+  color: #A9A9A9;
+  font-weight: 400;
 }
 
 a:link {
