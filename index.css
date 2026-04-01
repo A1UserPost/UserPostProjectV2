@@ -44,21 +44,16 @@ nav > span {
 /*Home page elements*/
 
 .introduction {
-  position: relative;      /* needed for absolute child positioning */
-  display: flex;
-  flex-direction: column;
-  margin: 30px auto 10px;
+  position: relative;
   width: 40%;
-  align-items: center;
-  justify-content: center;
-
-  background-image: url('WindowBox.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  aspect-ratio: 16/9;      /* gives the div height matching the image ratio */
+  margin: 30px auto 10px;
   overflow: hidden;
+}
+
+.intro-bg {
+  width: 100%;          
+  height: auto;         
+  display: block;       
 }
 
 .homeContent {
