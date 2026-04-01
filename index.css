@@ -40,6 +40,13 @@ nav > span {
   font-style: normal;
 }
 
+/*Home page elements*/
+
+.introduction {
+  align-items: center;
+  justify-items: center;
+  margin: 30px;
+}
 
 a:link {
   color: White;
