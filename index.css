@@ -43,9 +43,10 @@ nav > span {
 /*Home page elements*/
 
 .introduction {
+  margin: 30px;
+  width: 50%;
   align-items: center;
   justify-items: center;
-  margin: 30px;
 }
 
 a:link {
