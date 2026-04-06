@@ -3,13 +3,19 @@
 }
 
 body {
-        background-color: #F5F5F5;
+  /*custom cursor*/
+  cursor: url('cursor.png'), auto;
+  background-color: #F5F5F5;
+  background-image: url("frutigerAeroBG.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
 }
 
 .NavbarContainer {
   height: 90px;
-  background-color: #F55A5A;
+  background-color: #6488ea;
   padding: 30px 25px;
 }
 
