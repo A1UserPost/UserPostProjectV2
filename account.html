@@ -1,27 +1,44 @@
+<!DOCTYPE html>
 <html>
 <head>
   <link rel="stylesheet" href="index.css" />
-  <title>User Posting App</title>
+  <title>Account</title>
 </head>
 <body>
-
   <header class="NavbarContainer">
     <nav class="nav">
-      <img src="StupidDebatesLogo.png" alt="Webistie logo" class="logo" />
+      <img src="StupidDebatesLogo.png" alt="Website logo" class="logo" />
       <span class="span">Whole Lotta Nothing</span>
       <ul class="NavItems">
-              <li><a href='index.html'>Questions</a></li>
-              <li><a href='yourResponses.html'>Your Reason</a></li>
-              <li><a href='othersResponses.html'>Other's Reasons</a></li>
-              <li><a href='account.html'>Account</a></li>
+        <li><a href='index.html'>Questions</a></li>
+        <li><a href='yourResponses.html'>Your Reason</a></li>
+        <li><a href='othersResponses.html'>Other's Reasons</a></li>
+        <li><a href='account.html'>Account</a></li>
       </ul>
     </nav>
   </header>
-   <div class="app-section">
-    <h2>Account</h2>
-    <p><a href="login_account.html">Login to Account</a></p>
-    <p><a href="create_account.html">Create Account</a></p>
-  </div>
 
+  <div id="app"></div>
+
+  <script>
+    const username = localStorage.getItem("username");
+    const page = document.getElementById("app");
+
+    if (username) {
+      page.innerHTML = `
+        <div class="app-section">
+          <h2>Welcome, ${username}!</h2>
+        </div>
+      `;
+    } else {
+      page.innerHTML = `
+        <div class="app-section">
+          <h2>Account</h2>
+          <p><a href="login_account.html" style="display: inline-block; background-color: #6f8fe8; color: white; padding: 10px 16px; text-decoration: none; border-radius: 6px; font-weight: bold;">Login to Account</a></p>
+          <p><a href="create_account.html" style="display: inline-block; background-color: #6f8fe8; color: white; padding: 10px 16px; text-decoration: none; border-radius: 6px; font-weight: bold;">Create Account</a></p>
+        </div>
+      `;
+    }
+  </script>
 </body>
 </html>
