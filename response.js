@@ -173,10 +173,7 @@ function submitReason() {
   document.getElementById('submitReasonBtn').disabled = true;
   document.getElementById('selectedSideStatus').textContent = `You selected: ${selectedSide}`;
 
-  // Show your submitted response
-  document.getElementById('yourSideBadge').textContent = `Your Stance: ${selectedSide}`;
-  document.getElementById('yourReasonText').textContent = reason;
-  document.getElementById('yourResponseContainer').style.display = "block";
+
 }
 
 // 8. Load user's saved state on page reload
