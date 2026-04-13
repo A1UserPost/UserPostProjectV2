@@ -31,6 +31,11 @@
           <p><a class="account-link-button" href="#" id="logout-button">Log Out</a></p>
         </div>
       `;
+      document.getElementById("logout-button").addEventListener("click", function(event) {
+        event.preventDefault();
+        localStorage.removeItem("username");
+        window.location.href = "account.html";
+      });
     } else {
       page.innerHTML = `
         <div class="app-section">
