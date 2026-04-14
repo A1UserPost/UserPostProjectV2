@@ -201,9 +201,7 @@ function loadUserState() {
     document.getElementById('reasonInput').disabled = true;
     document.getElementById('submitReasonBtn').disabled = true;
     document.getElementById('selectedSideStatus').textContent = `You selected: ${selectedSide}`;
-    // Show submitted response
+    // Show succesful submission response
     document.getElementById('yourResponseContainer').style.display = "block";
-    document.getElementById('yourSideBadge').textContent = `Your Stance: ${selectedSide}`;
-    document.getElementById('yourReasonText').textContent = savedReason;
   }
 }
