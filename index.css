@@ -84,18 +84,10 @@ nav > span {
 margin: 10px;
 }
 
-a:link {
+a:link, a:visited, a:hover {
   color: White;
+  text-decoration: none;
 }
-
-a:visited {
-  color: White;
-}
-
-a:hover {
-  color: White;
-}
-
 /* upvoting system css things */
 :root {
   --bg: #0f0f0f;
