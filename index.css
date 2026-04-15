@@ -52,32 +52,34 @@ nav > span {
 }
 
 /*Home page elements*/
-
 .introduction {
-  position: relative;
-  width: 40%;
-  margin: 30px auto 10px;
-  overflow: hidden;
-}
+  background-image: url("home-window.jpeg"); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  /* The square ratio for 1057x1057 */
+  aspect-ratio: 1 / 1; 
+  
+  width: 100%;
+  max-width: 750px; 
+  margin: 50px auto;
 
-.intro-bg {
-  width: 100%;          
-  height: auto;         
-  display: block;       
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  color: black;
+  text-align: center;
+  padding: 20px;
 }
 
 .homeContent {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
-  width: 90%;
-  padding: 10px;
-  box-sizing: border-box;
-  color: rgb(48, 50, 52);
-  font-weight: 400;
+  font-size: auto;
+  margin: 5px 20px 30px 60px;
+  
+
 }
 
 .homeContent li {
