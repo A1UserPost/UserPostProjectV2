@@ -51,6 +51,10 @@ nav > span {
   font-style: normal;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /*Home page elements*/
 .introduction {
   background-image: url("home-window.jpeg"); 
