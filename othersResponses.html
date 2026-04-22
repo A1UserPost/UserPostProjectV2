@@ -20,6 +20,16 @@
   <h1>Other User's Responses</h1>
   <div id = "appSection">
   <h3 id="currentQuestion" class="no-question">No question posted yet!</h3>
+  <div id="sortControls">
+    <label for="sortSelect">Sort by:</label>
+    <select id="sortSelect" onchange="loadAllResponses()">
+      <option value="newest">Newest First</option>
+      <option value="oldest">Oldest First</option>
+      <option value="mostVotes">Most Votes</option>
+      <option value="sideA">Side A First</option>
+      <option value="sideB">Side B First</option>
+    </select>
+</div>
     <div id = "responsesContainer">
       <p>No responses yet!</p>
     </div>
