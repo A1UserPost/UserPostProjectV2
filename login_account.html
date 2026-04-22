@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="index.css" />
+  <title>User Posting App</title>
+</head>
+<body>
+  <header class="NavbarContainer">
+    <nav class="nav">
+      <img src="StupidDebatesLogo.png" alt="Website logo" class="logo" />
+      <span class="span">Whole Lotta Nothing</span>
+      <ul class="NavItems">
+        <li><a href='index.html'>Questions</a></li>
+        <li><a href='yourResponses.html'>Your Reason</a></li>
+        <li><a href='othersResponses.html'>Other's Reasons</a></li>
+        <li><a href='account.html'>Account</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="app-section">
+    <h2>Login</h2>
+
+    <form id="usernameInfo">
+      <p>
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" autocomplete="username">
+      </p>
+
+      <p>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" autocomplete="new-password">
+      </p>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+<script>
+  document.getElementById("usernameInfo").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const usernameVal = document.getElementById("username").value;
+    const passwordVal = document.getElementById("password").value;
+
+    const userData = {
+        username: usernameVal,
+        password: passwordVal
+    };
+
+    try {
+        const response = await fetch("https://server-o01l.onrender.com/login", {
+            mode: "cors",
+            method: "POST",
+            include: "credentials",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+        });
+
+          const result = await response.text();
+          if (result === "Login successful"){
+             localStorage.setItem("username", usernameVal);
+             window.location.href = "home.html";
+
+          }
+    } catch (error) {
+        console.error("Fetch failed:", error);
+        alert("Could not connect to server");
+    }
+});
+
+</script>
+
+</body>
+</html>
