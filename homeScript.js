@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const hasAccount = localStorage.getItem('userCreated') == true;
+  const hasAccount = localStorage.getItem('username');
   const restrictedItems = document.querySelectorAll('.restricted');
 
   if(!hasAccount) {
