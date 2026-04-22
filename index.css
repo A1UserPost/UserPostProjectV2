@@ -104,12 +104,17 @@ a:link, a:visited, a:hover {
 }
 
 .post-card {
-  background: var(--card);
-  border: 1px solid #2a2a2a;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 12px;
-  color: white;
+  background-image: url('windows-xp.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  padding: 80px 80px 55px 50px;
+  margin: 0 auto 15px 240px;
+  color: black;
+  font-weight: 500;
+  min-height: 200px;
+  max-width: 50%;
 }
 
 .upvote-btn {
@@ -135,4 +140,14 @@ a:link, a:visited, a:hover {
 .upvote-btn:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.other-responses .post-card {
+  background-image: url('WindowBox.png');
+  background-size: 100% 95%;
+  background-position: center;
+  margin: 0 55px 20px 45px !important;
+  max-width: calc(100% - 50px) !important;
+  padding: 80px 80px 55px 50px !important;
+  min-height: 200px !important;
 }
