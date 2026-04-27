@@ -11,57 +11,68 @@
       <span class="span">Whole Lotta Nothing</span>
       <ul class="NavItems">
         <li><a href='home.html'>Home</a></li>
-        <li class = 'restricted'><a href='index.html'>Questions</a></li>
-        <li class = 'restricted'><a href='yourResponses.html'>Your Reason</a></li>
-        <li class = 'restricted'><a href='othersResponses.html'>Other's Reasons</a></li>
+        <li class='restricted'><a href='index.html'>Questions</a></li>
+        <li class='restricted'><a href='yourResponses.html'>Your Reason</a></li>
+        <li class='restricted'><a href='othersResponses.html'>Other's Reasons</a></li>
         <li><a href='account.html'>Account</a></li>
       </ul>
     </nav>
   </header>
 
   <div id="app"></div>
+
   <script src="homeScript.js"></script>
   <script src="accountScript.js"></script>
   <script>
-  (function showAdminCodeSectionForLoggedInUsers() {
-    const username = localStorage.getItem("username");
-    if (!username) return;
+    (function showAdminCodeSectionForLoggedInUsers() {
+      const username = localStorage.getItem("username");
+      if (!username) return;
 
-    const appRoot = document.getElementById("app");
-    if (!appRoot || document.getElementById("adminCodeSection")) return;
+      const appRoot = document.getElementById("app");
+      if (!appRoot || document.getElementById("adminCodeSection")) return;
 
-    const adminSection = document.createElement("div");
-    adminSection.id = "adminCodeSection";
-    adminSection.className = "app-section";
-    adminSection.innerHTML = `
-      <h2>Admin Code Submission</h2>
-      <p>Submit your admin code. Verification will be implemented later.</p>
-      <form id="adminCodeForm">
-        <p>
-          <label for="adminCodeInput">Admin Code:</label><br>
-          <input
-            type="text"
-            id="adminCodeInput"
-            name="adminCode"
-            placeholder="Enter admin code"
-            autocomplete="off"
-            required
-          >
-        </p>
-        <button type="submit">Submit Code</button>
-      </form>
-      <p id="adminCodeStatus" style="margin-top: 10px;"></p>
-    `;
+      const adminSection = document.createElement("div");
+      adminSection.id = "adminCodeSection";
+      adminSection.className = "app-section";
+      adminSection.innerHTML = `
+        <h2>Admin Access</h2>
+        <p>Enter your admin code to access the moderator panel.</p>
+        <div id="adminCodeForm">
+          <p>
+            <label for="adminCodeInput">Admin Code:</label><br>
+            <input
+              type="password"
+              id="adminCodeInput"
+              placeholder="Enter admin code"
+              autocomplete="off"
+            >
+          </p>
+          <button onclick="submitAdminCode()">Submit Code</button>
+        </div>
+        <p id="adminCodeStatus" style="margin-top: 10px;"></p>
+      `;
+      appRoot.appendChild(adminSection);
+    })();
 
-    appRoot.appendChild(adminSection);
+    // Change this to whatever you want the admin code to be
+    const ADMIN_CODE = "WLH-admin-2026";
 
-    const adminCodeForm = document.getElementById("adminCodeForm");
-    const adminCodeStatus = document.getElementById("adminCodeStatus");
-    adminCodeForm.addEventListener("submit", function(event) {
-      event.preventDefault();
-      adminCodeStatus.textContent = "Admin code submitted. Validation is coming in a later update.";
-    });
-  })();
-</script>
+    function submitAdminCode() {
+      const input = document.getElementById("adminCodeInput").value.trim();
+      const status = document.getElementById("adminCodeStatus");
+
+      if (input === ADMIN_CODE) {
+        status.style.color = "green";
+        status.textContent = "✅ Code accepted! Redirecting to moderator panel...";
+        setTimeout(() => {
+          window.location.href = "questionSubmit.html";
+        }, 1000);
+      } else {
+        status.style.color = "red";
+        status.textContent = "❌ Incorrect admin code. Try again.";
+        document.getElementById("adminCodeInput").value = "";
+      }
+    }
+  </script>
 </body>
 </html>
