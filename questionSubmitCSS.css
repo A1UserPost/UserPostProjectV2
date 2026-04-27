@@ -52,6 +52,20 @@ nav > span {
   font-style: normal;
 }
 
+a:link {
+  color: White;
+}
+
+a:visited {
+  color: White;
+}
+
+a:hover {
+  color: White;
+}
+
+
+
 .app-section {
   margin: 2rem 0;
   padding: 1.5rem;
