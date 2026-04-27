@@ -3,13 +3,25 @@
 }
 
 body {
-        background-color: #F5F5F5;
-
+  /*custom cursor*/
+  cursor: url('cursor.png'), auto;
+  background-color: #F5F5F5;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  margin: 0;
 }
+
 
 .NavbarContainer {
   height: 90px;
-  background-color: #F55A5A;
+  background-image: linear-gradient(
+  to right, 
+  rgba(100, 136, 234, 0.7),
+  rgba(119, 221, 119, 0.7),
+  rgba(250, 200, 152, 0.7)  
+  );
   padding: 30px 25px;
 }
 
@@ -18,6 +30,7 @@ body {
   color: white;
   display: flex;
   align-items: center;
+  justify-items: center;
 }
 
 .NavItems {
@@ -26,10 +39,9 @@ body {
 }
 
 nav > img {
-  width: 150px;
+  width: 60px;
   margin-right: 7px;
-
-
+  height: auto;
 }
 
 nav > span {
@@ -39,21 +51,6 @@ nav > span {
   font-weight: 700;
   font-style: normal;
 }
-
-
-a:link {
-  color: White;
-}
-
-a:visited {
-  color: White;
-}
-
-a:hover {
-  color: White;
-}
-
-
 
 .app-section {
   margin: 2rem 0;
