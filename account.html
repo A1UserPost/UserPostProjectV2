@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8" />
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="auth-forms.css" />
   <title>Account</title>
 </head>
 <body>
@@ -10,49 +12,57 @@
       <img src="frutigerLogo.png" alt="Website logo" class="logo" />
       <span class="span">Whole Lotta Nothing</span>
       <ul class="NavItems">
-        <li><a href='home.html'>Home</a></li>
-        <li class='restricted'><a href='index.html'>Questions</a></li>
-        <li class='restricted'><a href='yourResponses.html'>Your Reason</a></li>
-        <li class='restricted'><a href='othersResponses.html'>Other's Reasons</a></li>
-        <li><a href='account.html'>Account</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li class="restricted"><a href="index.html">Questions</a></li>
+        <li class="restricted"><a href="yourResponses.html">Your Reason</a></li>
+        <li class="restricted"><a href="othersResponses.html">Other's Reasons</a></li>
+        <li><a href="account.html">Account</a></li>
       </ul>
     </nav>
   </header>
 
-  <div id="app"></div>
+  <div id="app" class="account-shell"></div>
 
   <script src="homeScript.js"></script>
   <script src="accountScript.js"></script>
   <script>
-    (function showAdminCodeSectionForLoggedInUsers() {
+    function showAdminCodeSectionForLoggedInUsers() {
       const username = localStorage.getItem("username");
       if (!username) return;
+      if (document.getElementById("adminCodeSection")) return;
 
+      /* Prefer the aside from the latest accountScript.js; if the server still has an older script without #accountAdminSlot, mount on #app so the admin UI never disappears. */
+      const slot = document.getElementById("accountAdminSlot");
       const appRoot = document.getElementById("app");
-      if (!appRoot || document.getElementById("adminCodeSection")) return;
+      const parent = slot || appRoot;
+      if (!parent) return;
 
       const adminSection = document.createElement("div");
       adminSection.id = "adminCodeSection";
-      adminSection.className = "app-section";
+      adminSection.className = "admin-code-aside";
+      /* Minimal UI: most users never need this; admins use a code when required. */
       adminSection.innerHTML = `
-        <h2>Admin Access</h2>
-        <p>Enter your admin code to access the moderator panel.</p>
-        <div id="adminCodeForm">
-          <p>
-            <label for="adminCodeInput">Admin Code:</label><br>
-            <input
-              type="password"
-              id="adminCodeInput"
-              placeholder="Enter admin code"
-              autocomplete="off"
-            >
-          </p>
-          <button onclick="submitAdminCode()">Submit Code</button>
+        <div id="adminCodeForm" class="admin-code-aside__row">
+          <input
+            type="password"
+            id="adminCodeInput"
+            autocomplete="off"
+            aria-label="Optional admin access code"
+            placeholder="Admin code (optional)"
+          >
+          <button type="button" class="admin-code-aside__btn" onclick="submitAdminCode()">Submit</button>
         </div>
-        <p id="adminCodeStatus" style="margin-top: 10px;"></p>
+        <p id="adminCodeStatus" class="admin-code-aside__status" aria-live="polite"></p>
       `;
-      appRoot.appendChild(adminSection);
-    })();
+      parent.appendChild(adminSection);
+    }
+
+    /* Run after DOM + other scripts (e.g. homeScript) so #app content from accountScript.js is present first. */
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", showAdminCodeSectionForLoggedInUsers);
+    } else {
+      showAdminCodeSectionForLoggedInUsers();
+    }
 
     // Change this to whatever you want the admin code to be
     const ADMIN_CODE = "WLH-admin-2026";
@@ -60,15 +70,18 @@
     function submitAdminCode() {
       const input = document.getElementById("adminCodeInput").value.trim();
       const status = document.getElementById("adminCodeStatus");
+      if (!status) return;
+
+      status.classList.remove("admin-code-aside__status--success", "admin-code-aside__status--error");
 
       if (input === ADMIN_CODE) {
-        status.style.color = "green";
-        status.textContent = "Code accepted! Redirecting to moderator panel...";
+        status.classList.add("admin-code-aside__status--success");
+        status.textContent = "Code accepted. Redirecting to moderator panel...";
         setTimeout(() => {
           window.location.href = "questionSubmit.html";
         }, 1000);
       } else {
-        status.style.color = "red";
+        status.classList.add("admin-code-aside__status--error");
         status.textContent = "Incorrect admin code. Try again.";
         document.getElementById("adminCodeInput").value = "";
       }
