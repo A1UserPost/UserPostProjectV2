@@ -63,13 +63,13 @@
 
       if (input === ADMIN_CODE) {
         status.style.color = "green";
-        status.textContent = "✅ Code accepted! Redirecting to moderator panel...";
+        status.textContent = "Code accepted! Redirecting to moderator panel...";
         setTimeout(() => {
           window.location.href = "questionSubmit.html";
         }, 1000);
       } else {
         status.style.color = "red";
-        status.textContent = "❌ Incorrect admin code. Try again.";
+        status.textContent = "Incorrect admin code. Try again.";
         document.getElementById("adminCodeInput").value = "";
       }
     }
