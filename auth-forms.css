@@ -1,0 +1,334 @@
+/* Login + Create Account: form card, fields, submit (no backend logic) */
+.auth-form-card {
+  max-width: 440px;
+  margin: 2.25rem auto;
+  padding: 1.75rem 1.85rem;
+  background: rgba(24, 57, 92, 0.64);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.auth-form-card h2 {
+  margin: 0 0 1.25rem;
+  color: #ffffff;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  font-size: 1.55rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.auth-form-card label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #e6f2ff;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.auth-form-card input[type="text"],
+.auth-form-card input[type="password"],
+.auth-form-card input[type="email"] {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.92);
+  color: #10253f;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.auth-form-card input:focus-visible {
+  outline: 3px solid rgba(111, 143, 232, 0.5);
+  outline-offset: 1px;
+}
+
+.auth-form-card form > p {
+  margin: 0 0 1.1rem;
+}
+
+/* Submit + plain buttons inside auth cards (login/create use submit; account admin uses type="button") */
+.auth-form-card button {
+  margin-top: 0.35rem;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 2px solid #4f74da;
+  border-radius: 10px;
+  background-color: #6f8fe8;
+  color: #ffffff;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.auth-form-card button:hover {
+  background-color: #5f82e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.auth-form-card button:active {
+  transform: translateY(1px);
+}
+
+/* Account shell: guest = single column; logged-in uses inner layout */
+#app.account-shell {
+  max-width: 920px;
+  margin: 2.25rem auto;
+  padding: 0 1rem 2.5rem;
+}
+
+#app.account-shell.account-shell--guest {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+#app.account-shell.account-shell--guest > .auth-form-card {
+  margin: 0;
+}
+
+/* Logged in: welcome on top, optional admin row pinned toward bottom */
+#app.account-shell.account-shell--logged-in {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px);
+  max-width: 520px;
+}
+
+#app.account-shell.account-shell--logged-in > .account-logged-in-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.account-logged-in-layout {
+  gap: 1rem;
+}
+
+.account-welcome-wrap {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.account-welcome-wrap .auth-form-card {
+  margin: 0;
+}
+
+.account-welcome-sub {
+  margin: 0 0 1.1rem;
+  color: #d4e8ff;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.account-admin-slot {
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  width: 100%;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Fallback: admin block appended directly under #app (older accountScript.js) */
+#app.account-shell.account-shell--logged-in > .admin-code-aside {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 100%;
+  max-width: 360px;
+  margin-top: auto;
+}
+
+/* Minimal admin strip — de-emphasized, bottom-aligned with layout above */
+.admin-code-aside {
+  background: rgba(10, 22, 38, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 0.5rem 0.6rem;
+  backdrop-filter: blur(3px);
+  box-shadow: none;
+  opacity: 0.88;
+}
+
+.admin-code-aside__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.admin-code-aside__row input[type="password"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.9);
+  color: #10253f;
+  font-size: 0.8rem;
+  box-sizing: border-box;
+}
+
+.admin-code-aside__row input[type="password"]:focus-visible {
+  outline: 2px solid rgba(111, 143, 232, 0.55);
+  outline-offset: 1px;
+}
+
+.admin-code-aside__btn {
+  flex: 0 0 auto;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.88);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.admin-code-aside__btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.admin-code-aside__status {
+  margin: 0.4rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: rgba(230, 242, 255, 0.9);
+  min-height: 0;
+}
+
+.admin-code-aside__status--success {
+  color: #d8f8e8;
+  background: rgba(12, 56, 40, 0.72);
+  border: 1px solid rgba(120, 210, 170, 0.45);
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.admin-code-aside__status--error {
+  color: #ffe8ec;
+  background: rgba(72, 18, 28, 0.72);
+  border: 1px solid rgba(255, 140, 150, 0.4);
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 420px) {
+  .admin-code-aside__row {
+    flex-wrap: wrap;
+  }
+
+  .admin-code-aside__btn {
+    width: 100%;
+  }
+}
+
+/* Guest account card */
+.account-guest-card h2 {
+  margin-bottom: 0.65rem;
+}
+
+.account-guest-lead {
+  margin: 0 0 1.25rem;
+  color: #d8eaff;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.account-guest-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+@media (min-width: 480px) {
+  .account-guest-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .account-guest-actions .account-link-button {
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+.auth-form-card #adminCodeForm > p {
+  margin: 0 0 1.1rem;
+}
+
+.auth-form-card #adminCodeStatus {
+  margin-top: 0.75rem;
+  font-size: 0.98rem;
+}
+
+/* Base pill links in auth cards; variants below override */
+.auth-form-card .account-link-button {
+  display: inline-block;
+  background-color: #6f8fe8;
+  color: #ffffff;
+  padding: 10px 16px;
+  border: 2px solid #4f74da;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.auth-form-card .account-link-button:hover {
+  background-color: #5f82e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.auth-form-card .account-link-button:active {
+  transform: translateY(1px);
+}
+
+.auth-form-card .account-link-button--primary {
+  text-align: center;
+}
+
+.auth-form-card .account-link-button--secondary {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.auth-form-card .account-link-button--secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+.auth-form-card .account-link-button--ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #e8f2ff;
+  box-shadow: none;
+}
+
+.auth-form-card .account-link-button--ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
