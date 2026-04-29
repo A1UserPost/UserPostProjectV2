@@ -142,14 +142,45 @@ function updateSubmitButton() {
   document.getElementById('submitReasonBtn').disabled = !selectedSide || reason.length === 0 || reasonSubmitted;
 }
 
-// 7. Submit reason
-function submitReason() {
+// 7. Send response to server
+async function sendResponseToServer(){
+  const reason = document.getElementById('reasonInput').value.trim();
+  const responseData = {
+    response: reason,
+    sideSelected: selectedSide,
+    questionData: publishedQuestionData
+  };
+
+  try {
+  const response = await fetch("https://server-o01l.onrender.com/response", {
+    mode: "cors",
+    method: "POST",
+    include: "credentials",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(responseData)
+  });
+  const result = await response.text();
+  }
+  catch (error) {
+    console.error("Fetch failed:", error);
+    alert("Could not connect to server");
+  }
+}
+
+
+// 8. Submit reason
+async function submitReason() {
   if (isQuestionExpired) return;
   const reason = document.getElementById('reasonInput').value.trim();
   if (!selectedSide || !reason || reasonSubmitted) return;
 
   reasonSubmitted = true;
   sessionStorage.setItem('userSubmittedReason', reason);
+
+  // Send the response to the server
+  await sendResponseToServer();
 
   // Save to shared localStorage so othersResponses.html can read it
   const newResponse = {
@@ -176,7 +207,7 @@ function submitReason() {
 
 }
 
-// 8. Load user's saved state on page reload
+// 9. Load user's saved state on page reload
 function loadUserState() {
   if (isQuestionExpired) return;
 
