@@ -33,7 +33,30 @@ function showExpiryDate() {
   `;
 }
 
+// Insert a question to the database
+async function insertQuestion(){
+   const questionData = {
+    question: question
+  };
+  
+  try {
+    const response = await fetch("https://server-o01l.onrender.com/question", {
+      mode: "cors",
+      method: "POST",
+      include: "credentials",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(questionData)
+    });
+    const result = await response.text();
+  }
+  catch (error) {
+    console.error("Fetch failed:", error);
+    alert("Could not connect to server");
+  }
 
+}
 
 // Publish question and custom sides
 function publishQuestion() {
@@ -55,6 +78,8 @@ function publishQuestion() {
     return;
   }
 
+  insertQuestion();
+  
   const publishTime = Date.now();
   const expireTime = publishTime + (7 * 24 * 60 * 60 * 1000);
   const newQuestion = {
