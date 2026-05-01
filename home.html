@@ -10,35 +10,45 @@
       <span class="span">Whole Lotta Nothing</span>
       <ul class="NavItems">
         <li><a href='home.html'>Home</a></li>
-        <li class = 'restricted'><a href='index.html'>Questions</a></li>
-        <li class = 'restricted'><a href='yourResponses.html'>Your Reason</a></li>
-        <li class = 'restricted'><a href='othersResponses.html'>Other's Reasons</a></li>
+        <li class='restricted'><a href='index.html'>Questions</a></li>
+        <li class='restricted'><a href='yourResponses.html'>Your Reason</a></li>
+        <li class='restricted'><a href='othersResponses.html'>Other's Reasons</a></li>
         <li><a href='account.html'>Account</a></li>
       </ul>
     </nav>
   </header>
 
-<div class="introduction">
-  <div class="homeContent">
-    <h1>Welcome to A Whole Lotta Nothing!</h1>
-    <ul>
-      <li>
-      A whole lotta nothing is a community space where you and other users can respond to weekly questions submitted by moderators 
-      and look at other users' reasonings as to why they response the way they did!
-      </li>
-      <li>
-        Check out the current question of the week over at "Questions"!
-      </li>
-      <li>
-        Respond to the current question over at "Your Response"
-      </li>
-    </ul>
-    <div class='app'>
-      <p>To access the site you must have an account created. Log in or create an account.</p>
-      <p><a href="account.html" style="display: inline-block; background-color: #6f8fe8; color: white; padding: 10px 16px; text-decoration: none; border-radius: 6px; font-weight: bold;">Login/Create Account</a></p>
+  <div class="introduction">
+    <div class="homeContent">
+      <h1>Welcome to A Whole Lotta Nothing!</h1>
+
+      <!-- Shown when NOT logged in -->
+      <div id="guestMessage">
+        <ul>
+          <li>A Whole Lotta Nothing is a community space where you and other users can respond to weekly questions submitted by moderators and look at other users' reasonings!</li>
+          <li>Check out the current question of the week over at "Questions"!</li>
+          <li>Respond to the current question over at "Your Response".</li>
+        </ul>
+        <div class='app'>
+          <p>To access the site you must have an account. Log in or create one to get started.</p>
+          <p><a href="account.html" style="display: inline-block; background-color: #6f8fe8; color: white; padding: 10px 16px; text-decoration: none; border-radius: 6px; font-weight: bold;">Login / Create Account</a></p>
+        </div>
+      </div>
+
+      <!-- Shown when logged in -->
+      <div id="loggedInMessage" style="display: none;">
+        <ul>
+          <li>Every week, a moderator posts a new debate question — pick a side and make your case!</li>
+          <li>Head to <a href="index.html">Questions</a> to see what's being debated this week.</li>
+          <li>Go to <a href="yourResponses.html">Your Reason</a> to pick your stance and write your argument.</li>
+          <li>Check out <a href="othersResponses.html">Other's Reasons</a> to read what everyone else thinks — and upvote the ones you agree with!</li>
+        </ul>
+        <p style="margin-top: 1rem; font-weight: bold;">Good luck, and have fun debating!</p>
+      </div>
+
     </div>
   </div>
-</div>
-<script src='homeScript.js'></script>
+
+  <script src='homeScript.js'></script>
 </body>
 </html>
