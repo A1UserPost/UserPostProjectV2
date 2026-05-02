@@ -91,10 +91,17 @@ nav > span {
 margin: 10px;
 }
 
+.homeContent a:link,
+.homeContent a:visited,
+.homeContent a:hover {
+  color: #9fe11d;
+}
+
 a:link, a:visited, a:hover {
   color: White;
   text-decoration: none;
 }
+
 /* upvoting system css things */
 :root {
   --bg: #0f0f0f;
