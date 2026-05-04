@@ -1,4 +1,6 @@
 const votedPosts = new Set();
+const voteCounts = {};
+let currentSort = 'newest';
 
 // 1. Handle upvote/unvote
 function handleVote(btn) {
@@ -8,34 +10,62 @@ function handleVote(btn) {
 
   if (votedPosts.has(postId)) {
     votedPosts.delete(postId);
-    countEl.textContent = parseInt(countEl.textContent) - 1;
+    voteCounts[postId] = (voteCounts[postId] || 1) - 1;
+    countEl.textContent = voteCounts[postId];
     btn.classList.remove('voted');
   } else {
     votedPosts.add(postId);
-    countEl.textContent = parseInt(countEl.textContent) + 1;
+    voteCounts[postId] = (voteCounts[postId] || 0) + 1;
+    countEl.textContent = voteCounts[postId];
     btn.classList.add('voted');
   }
 }
 
-// 2. Build a response card element
-function createResponseCard(id, author, side, reason) {
+// 2. Set active sort button and re-render
+function setSort(btn) {
+  currentSort = btn.dataset.sort;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadAllResponses();
+}
+
+// 3. Build a response card element
+function createResponseCard(response) {
   const card = document.createElement('div');
   card.classList.add('post-card');
-  card.dataset.id = id;
+  card.dataset.id = response.id;
+
   card.innerHTML = `
-    <span class="side-badge">${author}'s Stance: ${side}</span>
-    <p>${reason}</p>
+    <span class="side-badge">${response.author}'s Stance: ${response.side}</span>
+    <p>${response.reason}</p>
     <button class="upvote-btn" onclick="handleVote(this)">
-      AGREE? <span class="vote-count">0</span>
+      AGREE? <span class="vote-count">${voteCounts[response.id] || 0}</span>
     </button>
   `;
   return card;
 }
 
-// 3. Load all responses from localStorage and render them
+// 4. Sort responses based on currentSort
+function sortResponses(responses) {
+  switch (currentSort) {
+    case 'newest':
+      return [...responses].sort((a, b) => b.id - a.id);
+    case 'oldest':
+      return [...responses].sort((a, b) => a.id - b.id);
+    case 'mostVotes':
+      return [...responses].sort((a, b) => (voteCounts[b.id] || 0) - (voteCounts[a.id] || 0));
+    case 'sideA':
+      return [...responses].sort((a, b) => a.side.localeCompare(b.side));
+    case 'sideB':
+      return [...responses].sort((a, b) => b.side.localeCompare(a.side));
+    default:
+      return responses;
+  }
+}
+
+// 5. Load all responses from localStorage and render them
 function loadAllResponses() {
   const container = document.getElementById('responsesContainer');
-
   const question = localStorage.getItem('publishedQuestion');
   const allResponses = JSON.parse(localStorage.getItem('allResponses')) || [];
 
@@ -45,18 +75,18 @@ function loadAllResponses() {
     document.getElementById('currentQuestion').className = '';
   }
 
-  // Render cards
   if (allResponses.length === 0) {
     container.innerHTML = "<p>No responses yet!</p>";
     return;
   }
 
+  // Sort then render
+  const sorted = sortResponses(allResponses);
   container.innerHTML = '';
-  allResponses.forEach((response, index) => {
-    const card = createResponseCard(index + 1, response.author, response.side, response.reason);
-    container.appendChild(card);
+  sorted.forEach(response => {
+    container.appendChild(createResponseCard(response));
   });
 }
 
-// 4. Run on page load
+// 6. Run on page load
 window.onload = loadAllResponses;
