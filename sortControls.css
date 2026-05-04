@@ -6,6 +6,12 @@
   margin: 16px 0 20px 0;
 }
 
+#sortControls {
+  max-width: 750px;
+  margin: 16px auto 20px auto;
+  padding: 0 20px;
+}
+
 #sortControls .sort-label {
   font-weight: bold;
   font-size: 0.9rem;
@@ -34,4 +40,42 @@
   background: linear-gradient(to right, #6488ea, #77dd77);
   border-color: transparent;
   color: white;
+}
+
+/* Page header - title and question */
+#pageHeader {
+  text-align: center;
+  margin: 30px auto 10px auto;
+  max-width: 750px;
+  padding: 0 20px;
+}
+
+#pageTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #6488ea, #77dd77);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+
+#currentQuestion {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #333;
+  background: white;
+  border-left: 4px solid #6488ea;
+  border-radius: 6px;
+  padding: 10px 16px;
+  display: inline-block;
+  text-align: left;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+#currentQuestion.no-question {
+  color: #999;
+  border-left-color: #ccc;
+  font-weight: 400;
+  font-style: italic;
 }
