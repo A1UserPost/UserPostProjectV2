@@ -22,13 +22,13 @@
   <div id = "appSection">
   <h3 id="currentQuestion" class="no-question">No question posted yet!</h3>
   <div id="sortControls">
-    <label for="sortSelect">Sort by:</label>
-    <select id="sortSelect" onchange="loadAllResponses()">
-      <option value="newest">Newest First</option>
-      <option value="oldest">Oldest First</option>
-      <option value="mostVotes">Most Votes</option>
-      <option value="sideA">Side A First</option>
-      <option value="sideB">Side B First</option>
+      <span class="sort-label">Sort by:</span>
+      <button class="sort-btn active" data-sort="newest" onclick="setSort(this)">Newest</button>
+      <button class="sort-btn" data-sort="oldest" onclick="setSort(this)">Oldest</button>
+      <button class="sort-btn" data-sort="mostVotes" onclick="setSort(this)">Most Votes</button>
+      <button class="sort-btn" data-sort="sideA" onclick="setSort(this)">Side A First</button>
+      <button class="sort-btn" data-sort="sideB" onclick="setSort(this)">Side B First</button>
+    </div>
     </select>
 </div>
     <div id = "responsesContainer">
