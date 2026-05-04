@@ -2,26 +2,29 @@
 <head>
   <link rel="stylesheet" href="index.css" />
   <link rel="stylesheet" href="sortControls.css" />
-  <title>User Posting App</title>
+  <title>Other's Reasons - Whole Lotta Nothing</title>
 </head>
 <body>
-
   <header class="NavbarContainer">
     <nav class="nav">
-      <img src="frutigerLogo.png" alt="Webistie logo" class="logo" />
+      <img src="frutigerLogo.png" alt="Website logo" class="logo" />
       <span class="span">Whole Lotta Nothing</span>
       <ul class="NavItems">
-              <li><a href='index.html'>Questions</a></li>
-              <li><a href='yourResponses.html'>Your Reason</a></li>
-              <li><a href='othersResponses.html'>Other's Reasons</a></li>
-              <li><a href='account.html'>Account</a></li>
+        <li><a href='index.html'>Questions</a></li>
+        <li><a href='yourResponses.html'>Your Reason</a></li>
+        <li><a href='othersResponses.html'>Other's Reasons</a></li>
+        <li><a href='account.html'>Account</a></li>
       </ul>
     </nav>
   </header>
-  <h1>Other User's Responses</h1>
-  <div id = "appSection">
-  <h3 id="currentQuestion" class="no-question">No question posted yet!</h3>
-  <div id="sortControls">
+
+  <div id="pageHeader">
+    <h1 id="pageTitle">Other Users' Responses</h1>
+    <h3 id="currentQuestion" class="no-question">No question posted yet!</h3>
+  </div>
+
+  <div id="appSection">
+    <div id="sortControls">
       <span class="sort-label">Sort by:</span>
       <button class="sort-btn active" data-sort="newest" onclick="setSort(this)">Newest</button>
       <button class="sort-btn" data-sort="oldest" onclick="setSort(this)">Oldest</button>
@@ -29,14 +32,12 @@
       <button class="sort-btn" data-sort="sideA" onclick="setSort(this)">Side A First</button>
       <button class="sort-btn" data-sort="sideB" onclick="setSort(this)">Side B First</button>
     </div>
-    </select>
-</div>
-    <div id = "responsesContainer">
+
+    <div id="responsesContainer">
       <p>No responses yet!</p>
     </div>
   </div>
 
   <script src="script.js"></script>
-    
 </body>
 </html>
