@@ -3,8 +3,6 @@
 }
 
 body {
-  /*custom cursor*/
-  cursor: url('cursor.png'), auto;
   background-color: #F5F5F5;
   background-image: url("frutigerAeroBG.jpg");
   background-size: cover;
@@ -12,6 +10,117 @@ body {
   background-repeat: no-repeat;
   min-height: 100vh;
   margin: 0;
+}
+
+body.question-page::before {
+  content: "";
+  position: fixed;
+  top: 295px;
+  left: 12px;
+  width: 520px;
+  height: 520px;
+  background-image: url('dolphin.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 7;
+  pointer-events: none;
+}
+
+body.question-page .deco1 {
+  position: fixed;
+  top: 290px;
+  right: 430px;
+  width: 220px;
+  height: 220px;
+  background-image: url('fishbubble.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 6;
+  transform: rotate(3deg); 
+  pointer-events: none;
+}
+
+body.question-page .deco2 {
+  position: fixed;
+  top: 130px;
+  right: 40px;
+  width: 320px;
+  height: 320px;
+  background-image: url('bubbles.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 7;
+  transform: rotate(180deg); 
+  pointer-events: none;
+}
+
+body.question-page .deco3 {
+  position: fixed;
+  top: 880px;
+  right: 153px;
+  width: 200px;
+  height: 200px;
+  background-image: url('fishyellow.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 7;
+  transform: rotate(-28deg); 
+  pointer-events: none;
+}
+
+body.question-page .deco5 {
+  position: fixed;
+  top: 17px;
+  right: 35px;
+  width: 75px;
+  height: 75px;
+  background-image: url('star.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 9999;
+  transform: rotate(10deg); 
+  pointer-events: none;
+}
+
+body.question-page .deco6 {
+  position: fixed;
+  bottom: -350px;
+  left: 0px;
+  width: 1900px;
+  height: 500px;
+  background-image: url('grass.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 6;
+  pointer-events: none;
+}
+
+body.question-page .deco7 {
+  position: fixed;
+  bottom: 120px;
+  right: 343px;
+  width: 200px;
+  height: 200px;
+  background-image: url('fishblue.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 6;
+  transform: rotate(-30deg); 
+  pointer-events: none;
+}
+
+body.question-page .deco8 {
+  position: fixed;
+  top: 690px;
+  right: 70px;
+  width: 210px;
+  height: 210px;
+  background-image: url('fishorange.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 6;
+  transform: rotate(10deg); 
+  pointer-events: none;
 }
 
 .NavbarContainer {
