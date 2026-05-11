@@ -1,0 +1,10 @@
+
+#pageTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #6488ea, #77dd77);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
