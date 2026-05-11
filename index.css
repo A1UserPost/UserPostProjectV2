@@ -94,6 +94,19 @@ body.home-page .laptopDeco {
   transform: rotate(10deg); 
   pointer-events: none;
 }
+body.others-responses-page .magnifyingDeco {
+  position: fixed;
+  top: 17px;
+  right: 35px;
+  width: 75px;
+  height: 75px;
+  background-image: url('magnifying.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 9999;
+  transform: rotate(10deg); 
+  pointer-events: none;
+}
 
 body.question-page .deco6 {
   position: fixed;
