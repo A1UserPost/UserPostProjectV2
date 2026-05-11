@@ -167,23 +167,22 @@ nav > span {
 
 /*Home page elements*/
 .introduction {
-  background-image: url("home-window.jpeg"); 
+  background-image: url("notepadImg.png"); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  
-  /* The square ratio for 1057x1057 */
-  aspect-ratio: 1 / 1; 
-  
-  width: 100%;
-  max-width: 750px; 
-  margin: 50px auto;
 
+  /* Updated for 1280x600 image (roughly 64:30 ratio) */
+  aspect-ratio: 64 / 30;
+
+  width: 100%;
+  max-width: 900px;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   color: black;
   text-align: center;
   padding: 20px;
