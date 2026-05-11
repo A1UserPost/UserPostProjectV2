@@ -1,92 +1,141 @@
-const votedPosts = new Set();
-const voteCounts = {};
-let currentSort = 'newest';
+// Global State
+let selectedSide = null;
+let reasonSubmitted = false;
+let publishedSides = [];
 
-// 1. Handle upvote/unvote
-function handleVote(btn) {
-  const postCard = btn.closest('.post-card');
-  const postId = postCard.dataset.id;
-  const countEl = btn.querySelector('.vote-count');
+// 1. Initialize UI on load
+window.onload = () => {
+  loadPublishedQuestionAndSides();
+  loadUserState();
+  updateSubmitButton();
+};
 
-  if (votedPosts.has(postId)) {
-    votedPosts.delete(postId);
-    voteCounts[postId] = (voteCounts[postId] || 1) - 1;
-    countEl.textContent = voteCounts[postId];
-    btn.classList.remove('voted');
-  } else {
-    votedPosts.add(postId);
-    voteCounts[postId] = (voteCounts[postId] || 0) + 1;
-    countEl.textContent = voteCounts[postId];
-    btn.classList.add('voted');
-  }
-}
-
-// 2. Set active sort button and re-render
-function setSort(btn) {
-  currentSort = btn.dataset.sort;
-  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  loadAllResponses();
-}
-
-// 3. Build a response card element
-function createResponseCard(response) {
-  const card = document.createElement('div');
-  card.classList.add('post-card');
-  card.dataset.id = response.id;
-
-  card.innerHTML = `
-    <span class="side-badge">${response.author}'s Stance: ${response.side}</span>
-    <p>${response.reason}</p>
-    <button class="upvote-btn" onclick="handleVote(this)">
-      AGREE? <span class="vote-count">${voteCounts[response.id] || 0}</span>
-    </button>
-  `;
-  return card;
-}
-
-// 4. Sort responses based on currentSort
-function sortResponses(responses) {
-  switch (currentSort) {
-    case 'newest':
-      return [...responses].sort((a, b) => b.id - a.id);
-    case 'oldest':
-      return [...responses].sort((a, b) => a.id - b.id);
-    case 'mostVotes':
-      return [...responses].sort((a, b) => (voteCounts[b.id] || 0) - (voteCounts[a.id] || 0));
-    case 'sideA':
-      return [...responses].sort((a, b) => a.side.localeCompare(b.side));
-    case 'sideB':
-      return [...responses].sort((a, b) => b.side.localeCompare(a.side));
-    default:
-      return responses;
-  }
-}
-
-// 5. Load all responses from localStorage and render them
-function loadAllResponses() {
-  const container = document.getElementById('responsesContainer');
+// 2. Load MOD-PUBLISHED Question and Sides
+function loadPublishedQuestionAndSides() {
   const question = localStorage.getItem('publishedQuestion');
-  const allResponses = JSON.parse(localStorage.getItem('allResponses')) || [];
+  publishedSides = JSON.parse(localStorage.getItem('publishedSides')) || [];
 
-  // Show the current question
+  const qElement = document.getElementById('publishedQuestion');
+  const sideContainer = document.getElementById('sideButtonsContainer');
+
+  // Reset UI state
+  selectedSide = null;
+  reasonSubmitted = false;
+  document.getElementById('selectedSideStatus').textContent = "No side selected yet!";
+  document.getElementById('reasonInput').value = "";
+  document.getElementById('charCount').textContent = "0 / 500 characters";
+  document.getElementById('yourResponseContainer').style.display = "none";
+  document.getElementById('submitReasonBtn').disabled = true;
+  sideContainer.innerHTML = '';
+
+  // Load question
   if (question) {
-    document.getElementById('currentQuestion').textContent = question;
-    document.getElementById('currentQuestion').className = '';
+    qElement.textContent = question;
+    qElement.className = "";
+  } else {
+    qElement.textContent = "No question published yet! Check back soon.";
+    qElement.className = "no-question";
   }
 
-  if (allResponses.length === 0) {
-    container.innerHTML = "<p>No responses yet!</p>";
-    return;
+  // Load dynamic side buttons
+  if (publishedSides.length >= 2) {
+    publishedSides.forEach(side => {
+      const btn = document.createElement('button');
+      btn.id = `side-${side.replace(/\s+/g, '-')}`;
+      btn.textContent = side;
+      btn.onclick = () => selectSide(side);
+      sideContainer.appendChild(btn);
+    });
   }
-
-  // Sort then render
-  const sorted = sortResponses(allResponses);
-  container.innerHTML = '';
-  sorted.forEach(response => {
-    container.appendChild(createResponseCard(response));
-  });
 }
 
-// 6. Run on page load
-window.onload = loadAllResponses;
+// 3. Select Side
+function selectSide(side) {
+  if (reasonSubmitted) return;
+
+  selectedSide = side;
+  sessionStorage.setItem('userSelectedSide', side);
+  document.getElementById('selectedSideStatus').textContent = `You selected: ${side} (cannot be switched once your reason is submitted)`;
+
+  document.querySelectorAll('.side-buttons button').forEach(btn => {
+    btn.classList.toggle('selected', btn.textContent === side);
+  });
+
+  updateSubmitButton();
+}
+
+// 4. Character Count for Reason Input
+function countChars() {
+  const len = document.getElementById('reasonInput').value.length;
+  document.getElementById('charCount').textContent = `${len} / 500 characters`;
+  updateSubmitButton();
+}
+
+// 5. Submit Button
+function updateSubmitButton() {
+  const reason = document.getElementById('reasonInput').value.trim();
+  const btn = document.getElementById('submitReasonBtn');
+  btn.disabled = !selectedSide || reason.length === 0 || reasonSubmitted;
+}
+
+// 6. Submit Reason
+function submitReason() {
+  const reason = document.getElementById('reasonInput').value.trim();
+  if (!selectedSide || !reason || reasonSubmitted) return;
+
+  reasonSubmitted = true;
+  sessionStorage.setItem('userSubmittedReason', reason);
+
+  // Save to shared localStorage so othersResponses.html can see it
+  const newResponse = {
+    id: Date.now(),
+    author: "Anonymous",
+    side: selectedSide,
+    reason: reason,
+  };
+  const existing = JSON.parse(localStorage.getItem('allResponses')) || [];
+  existing.push(newResponse);
+  localStorage.setItem('allResponses', JSON.stringify(existing));
+
+  // Lock UI elements
+  document.querySelectorAll('.side-buttons button').forEach(btn => {
+    btn.classList.add('locked');
+    btn.classList.remove('selected');
+    btn.disabled = true;
+  });
+  document.getElementById('reasonInput').classList.add('locked');
+  document.getElementById('reasonInput').disabled = true;
+  document.getElementById('submitReasonBtn').disabled = true;
+  document.getElementById('selectedSideStatus').textContent = `You selected: ${selectedSide}`;
+
+  // Show submitted confirmation
+  document.getElementById('yourResponseContainer').style.display = "block";
+}
+
+// 7. Load User Saved State
+function loadUserState() {
+  const savedSide = sessionStorage.getItem('userSelectedSide');
+  const savedReason = sessionStorage.getItem('userSubmittedReason');
+
+  if (savedSide && !reasonSubmitted) {
+    selectedSide = savedSide;
+    selectSide(savedSide);
+  }
+
+  if (savedReason && !reasonSubmitted) {
+    reasonSubmitted = true;
+    document.getElementById('reasonInput').value = savedReason;
+    countChars();
+    // Lock UI
+    document.querySelectorAll('.side-buttons button').forEach(btn => {
+      btn.classList.add('locked');
+      btn.disabled = true;
+    });
+    document.getElementById('reasonInput').classList.add('locked');
+    document.getElementById('reasonInput').disabled = true;
+    document.getElementById('submitReasonBtn').disabled = true;
+    document.getElementById('selectedSideStatus').textContent = `You selected: ${selectedSide}`;
+    // Show confirmation
+    document.getElementById('yourResponseContainer').style.display = "block";
+  }
+}
