@@ -1,7 +1,11 @@
 
 #pageTitle {
+  text-align: center;
+  margin: 30px auto 10px auto;
+  max-width: 750px;
+  padding: 0 20px;
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 1500;
   background: linear-gradient(to right, #6488ea, #77dd77);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
