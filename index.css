@@ -107,7 +107,19 @@ body.others-responses-page .magnifyingDeco {
   transform: rotate(10deg); 
   pointer-events: none;
 }
-
+body.account-page .folderDeco {
+  position: fixed;
+  top: 17px;
+  right: 35px;
+  width: 75px;
+  height: 75px;
+  background-image: url('folderIcon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 9999;
+  transform: rotate(10deg); 
+  pointer-events: none;
+}
 body.question-page .deco6 {
   position: fixed;
   bottom: -350px;
