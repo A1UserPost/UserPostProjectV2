@@ -3,8 +3,7 @@
 }
 
 body {
-  /*custom cursor*/
-  cursor: url('cursor.png'), auto;
+
   background-color: #F5F5F5;
   background-image: url("frutigerAeroBG.jpg");
   background-size: cover;
