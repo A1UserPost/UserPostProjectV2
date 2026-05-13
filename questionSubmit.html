@@ -4,10 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="questionSubmitCSS.css" />
-  <title>Moderator - Argument Platform</title>
+  <title>Moderator</title>
 </head>
-<body>
-  <!-- Navbar -->
+<body> <!-- navigation -->
   <header class="NavbarContainer">
     <nav class="nav">
       <h2>Moderator Panel</h2>
@@ -19,14 +18,13 @@
     </nav>
   </header>
 
-  <!-- Moderator Question and Custom Side Setup  -->
   <div class="app-section">
     <h3>Create/Edit Argument Question</h3>
     <input type="text" id="modQuestionInput" placeholder="e.g., Does pineapple belong on pizza?" required>
     
     <h3 style="margin-top: 2rem;">Custom Sides (Add/Edit/Delete)</h3>
     <div id="sidesContainer">
-      <!-- Default 2 sides  -->
+      <!-- sides -->
       <div class="side-item">
         <input type="text" class="side-input" placeholder="Side name (e.g., Yes, Milky Way, Cat)" value="Yes">
         <button class="delete-side" onclick="deleteSide(this)">Delete</button>
@@ -36,14 +34,23 @@
         <button class="delete-side" onclick="deleteSide(this)">Delete</button>
       </div>
     </div>
+    <!-- actions -->
     <button onclick="addSide()">+ Add Another Side</button>
     <button class="publish-btn" onclick="publishQuestion()">PUBLISH TO USER UI</button>
-    <!-- Refresh User UI button -->
     <button class="refresh-user-ui-btn" onclick="openUserUI()">Refresh User UI (Load Latest Question)</button>
-    <!-- Direct link to User UI -->
     <div id="publishStatus" class="status"></div>
   </div>
-  
+  <!-- reports -->
+  <div class="app-section" id="reportsSection">
+  <h3>Submitted Reports</h3>
+  <button onclick="getReports()">Load Reports</button>
+  <div id="reportsContainer" style="margin-top: 16px;">
+    <p>view submitted reports.</p>
+  </div>
+</div>
+
+
+  <script src="reportList.js"></script>
   <script src="questionSubmit.js"></script>
 </body>
 </html>
