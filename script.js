@@ -34,18 +34,16 @@ function createResponseCard(response) {
   const card = document.createElement('div');
   card.classList.add('post-card');
   card.dataset.id = response.id;
- 
+
   card.innerHTML = `
     <span class="side-badge">${response.author}'s Stance: ${response.side}</span>
     <p>${response.reason}</p>
-    <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
-      <button class="upvote-btn" onclick="handleVote(this)">
-        AGREE? <span class="vote-count">${voteCounts[response.id] || 0}</span>
-      </button>
-      <button class="report-btn" onclick="reportResponse('${response.id}')">Report</button>
-    </div>
+    <button class="upvote-btn" onclick="handleVote(this)">
+      AGREE? <span class="vote-count">${voteCounts[response.id] || 0}</span>
+    </button>
   `;
   return card;
+}
 
 // 4. Sort responses based on currentSort
 function sortResponses(responses) {
