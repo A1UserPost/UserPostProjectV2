@@ -32,7 +32,6 @@
       if (!username) return;
       if (document.getElementById("adminCodeSection")) return;
 
-      /* Prefer the aside from the latest accountScript.js; if the server still has an older script without #accountAdminSlot, mount on #app so the admin UI never disappears. */
       const slot = document.getElementById("accountAdminSlot");
       const appRoot = document.getElementById("app");
       const parent = slot || appRoot;
@@ -41,7 +40,7 @@
       const adminSection = document.createElement("div");
       adminSection.id = "adminCodeSection";
       adminSection.className = "admin-code-aside";
-      /* Minimal UI: most users never need this; admins use a code when required. */
+      /* Input mod code */
       adminSection.innerHTML = `
         <div id="adminCodeForm" class="admin-code-aside__row">
           <input
@@ -57,15 +56,13 @@
       `;
       parent.appendChild(adminSection);
     }
-
-    /* Run after DOM + other scripts (e.g. homeScript) so #app content from accountScript.js is present first. */
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", showAdminCodeSectionForLoggedInUsers);
     } else {
       showAdminCodeSectionForLoggedInUsers();
     }
 
-    // Change this to whatever you want the admin code to be
+    // admin code
     const ADMIN_CODE = "WLH-admin-2026";
 
     function submitAdminCode() {
